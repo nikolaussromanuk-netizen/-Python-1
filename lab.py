@@ -23,9 +23,32 @@ def draw_flag(width, length):
             else:
                 draw_line_flag(width, base*5, base*3)
 
+def draw_line_circle(offset, width):
+    part_a = f"{' '*(offset)}"
+    part_b = f"{CIS}48;5;15m{' ' * width}{DEF}"
 
+    print(f"{part_a}{part_b}{part_a}")
+
+def draw_circle(r): #делать радиус четными, а то беда ужас
+    if r % 2 != 0:
+        r += 1
+    step = 1
+    width = r
+    offset = r // 2
+
+    for line in range(2 * r):
+        draw_line_circle(offset, width)
+        if line < r // 2:
+            width += 2 * step
+            offset -= step
+        elif line < 3 * r // 2 - 1:
+            continue
+        else:
+            width -= 2 * step
+            offset += step
 
 
 
 if __name__ == "__main__":
-    draw_flag(18, 6)
+    #draw_flag(18, 6)
+    draw_circle(6)
