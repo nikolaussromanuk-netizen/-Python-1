@@ -33,7 +33,7 @@ def draw_circle(r): #делать радиус четными, а то беда 
     if r % 2 != 0:
         r += 1
     step = 1
-    width = r
+    width = 5*r//2
     offset = r // 2
 
     for line in range(2 * r):
@@ -51,4 +51,4 @@ def draw_circle(r): #делать радиус четными, а то беда 
 
 if __name__ == "__main__":
     #draw_flag(18, 6)
-    draw_circle(6)
+    draw_circle(2)
