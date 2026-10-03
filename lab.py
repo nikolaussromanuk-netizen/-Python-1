@@ -76,15 +76,14 @@ def draw_pattern(n, r):
         print(f"{CSI}{7*r//2}C{CSI}{2*r}A", end = "", flush=True)
     draw_circle(r, color, color_offset)
 
-def draw_animation1():
-    color1 = 28 #потухший зеленый
-    color2 = 143 #потушхий желтый
-    color3 = 124 #потухший красный
+def draw_part_animation(color1, color2, color3):
+    #color1 - зеленый
+    #color2 - желтый
+    #color3 - красный
 
     color_offset = 0
 
     r = 4
-    width = 7
 
     draw_circle(r, color3, color_offset)
     print()
@@ -96,16 +95,19 @@ def draw_animation1():
     print()
 
 def draw_animation(): #нарисовать анимцаию светофора с 4 кадрами
+    #нужно переделать будет без os.system("clear") используя CSI n k(удаление)
+    # и CSI перемещение курсора
+    os.system("clear")
     while True:
         for i in range(4):
             if i == 0: #все цвета выключены
-                draw_animation1()
+                draw_part_animation(28, 143, 124)
             elif i == 1: #включен красный
-                pass
+                draw_part_animation(28, 143, 196)
             elif i == 2: #включен желтый
-                pass
+                draw_part_animation(28, 226, 124)
             elif i == 3: #включен зеленый
-                pass
+                draw_part_animation(118, 143, 124)
             time.sleep(1)
             os.system("clear")
             
@@ -119,5 +121,5 @@ if __name__ == "__main__":
     #draw_pattern(4, 4)
 
     #3 задание нарисовать анмиацию на 3-4 кадра
-    draw_animation()
+    #draw_animation()
     pass
