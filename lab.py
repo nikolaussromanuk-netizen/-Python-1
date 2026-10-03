@@ -95,9 +95,7 @@ def draw_part_animation(color1, color2, color3):
     print()
 
 def draw_animation(): #нарисовать анимцаию светофора с 4 кадрами
-    #нужно переделать будет без os.system("clear") используя CSI n k(удаление)
-    # и CSI перемещение курсора
-    os.system("clear")
+
     while True:
         for i in range(4):
             if i == 0: #все цвета выключены
@@ -109,7 +107,10 @@ def draw_animation(): #нарисовать анимцаию светофора 
             elif i == 3: #включен зеленый
                 draw_part_animation(118, 143, 124)
             time.sleep(1)
-            os.system("clear")
+            #print(f"{CSI}27A", end="", flush=True)
+
+            for k in range(27):
+                print(f"{CSI}1A{ZERO}{ERAZE}", end="", flush=True)
             
     
 
@@ -121,5 +122,5 @@ if __name__ == "__main__":
     #draw_pattern(4, 4)
 
     #3 задание нарисовать анмиацию на 3-4 кадра
-    #draw_animation()
+    draw_animation()
     pass
