@@ -1,3 +1,6 @@
+import time
+import os
+
 CSI = "\x1b["
 ZERO = f"{CSI}0G"
 ERAZE = f"{CSI}2K"
@@ -29,13 +32,13 @@ def draw_flag(width, length):
             else:
                 draw_line_flag(width, length_white, length_blue)
 
-def draw_line_circle(offset, width, color):
+def draw_line_circle(offset, width, color, color_offset):
     part_a = f"{' '*(offset)}"
     part_b = f"{CSI}48;5;{color}m{' ' * width}{DEF}"
 
     print(f"{part_a}{part_b}{part_a}{CSI}1B{CSI}{2*offset + width}D", end="", flush=True)
 
-def draw_circle(r, color): #при нечетном радиусе ломается симметрия
+def draw_circle(r, color, color_offset): #при нечетном радиусе ломается симметрия
     if r % 2 != 0:
         r += 1
 
@@ -46,7 +49,7 @@ def draw_circle(r, color): #при нечетном радиусе ломает�
     offset = r // 2
 
     for line in range(2 * r):
-        draw_line_circle(offset, width, color)
+        draw_line_circle(offset, width, color, color_offset)
         if line < r // 2:
             #верхняя часть расширяется
             width += 2 * step
@@ -64,16 +67,49 @@ def draw_pattern(n, r):
     r = max(r, 2)
 
     color = 255 #цвет круга
+    color_offset = 0 
     
     for i in range(n - 1):
-        draw_circle(r, color)
+        draw_circle(r, color, color_offset)
         #сдвигаем курсор вправо на максимальную ширину круга, поднимаем вверх на диаметр круга
         #end = "", потому что иначе print сбрасывает курсор на нулевой столбец следующей строки
         print(f"{CSI}{7*r//2}C{CSI}{2*r}A", end = "", flush=True)
-    draw_circle(r, color)
+    draw_circle(r, color, color_offset)
 
-def draw_animation():
-    pass
+def draw_animation1():
+    color1 = 28 #потухший зеленый
+    color2 = 143 #потушхий желтый
+    color3 = 124 #потухший красный
+
+    color_offset = 0
+
+    r = 4
+    width = 7
+
+    draw_circle(r, color3, color_offset)
+    print()
+
+    draw_circle(r, color2, color_offset)
+    print()
+
+    draw_circle(r, color1, color_offset)
+    print()
+
+def draw_animation(): #нарисовать анимцаию светофора с 4 кадрами
+    while True:
+        for i in range(4):
+            if i == 0: #все цвета выключены
+                draw_animation1()
+            elif i == 1: #включен красный
+                pass
+            elif i == 2: #включен желтый
+                pass
+            elif i == 3: #включен зеленый
+                pass
+            time.sleep(1)
+            os.system("clear")
+            
+    
 
 if __name__ == "__main__":
     #1 задание нарисовать флаг Финляндии
@@ -82,5 +118,6 @@ if __name__ == "__main__":
     #2 задание нарисовать заданный узор
     #draw_pattern(4, 4)
 
-    #draw_circle
+    #3 задание нарисовать анмиацию на 3-4 кадра
+    draw_animation()
     pass
